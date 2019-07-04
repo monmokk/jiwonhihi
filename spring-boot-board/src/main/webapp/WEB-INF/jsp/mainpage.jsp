@@ -127,23 +127,74 @@
 		}
 	</style>
 	<script>
-		function login(){
-			if('${dto.id}' == '' || '${dto.id}' == null){
-				if(confirm('글을 작성하시려면 먼저 로그인하셔야 합니다.\n로그인 창으로 이동하시겠습니까?')){
-					location.href='login.do?page=login';
-					return false;
-				}else{
-					return false;
-				}
-			}
-		}
+	function lotto(size, lowest, highest) {
+    	var numbers = [];
+      	for(var i = 0; i < size; i++) {
+    		var add = true;
+        	var randomNumber = Math.floor(Math.random() * highest) + 1;
+        	for(var y = 0; y < highest; y++) {
+        		if(numbers[y] == randomNumber) {
+    	    		add = false;
+        		}
+        	}
+     		if(add) {
+     			numbers.push(randomNumber);
+     		} else {
+     			i--;
+     		}
+     	}
+      	console.log(numbers.join(" - "));
+
+      	var fin = [];
+      	function lotto5(){
+	     	var dup5 = [];
+	     	var numbers5 = [];
+	     	for(var i = 0; i<size; i++){
+	     		var add = true;
+	     		var randomNumber = Math.floor(Math.random()*size) + 1;
+	   			for(var y = 0; y < size; y++){
+	   				if(dup5[y] == randomNumber){
+	   					add = false;
+	   				}else if(randomNumber == 6){
+	     				var randomNumber5 = Math.floor(Math.random() * highest) + 1;
+	     				for(var x = 0; x < highest; x++) {
+	     					if(numbers[x] == randomNumber5) {
+	     						add = false;
+	     					}
+	     				}
+	     			}
+	   			}
+	     		if(add){
+	    			dup5.push(randomNumber);
+	      			numbers5.push(numbers[dup5[i]]);
+	      		} else {
+	    	  		i--;
+	      		}
+	      	}
+	     	for(var i = 0; i < highest; i ++){
+	     		if(fin[i] == randomNumber5){
+	     			lotto5();
+	     		}
+	     	}
+	      	numbers.push(randomNumber5);
+	        numbers5.push(numbers[6]);
+	    	console.log(numbers5.filter(Number).join(" - "));
+	    	
+	    	fin.push(numbers[6]);
+	    	numbers.pop();
+     	}
+     	for(var m = 0; m<3; m++){
+     		lotto5();
+     	}
+    }
 	</script>
 </head>
 <body>
 	<hr width='800' size='2' noshade>
 	<h1><img src='https://pbs.twimg.com/media/C6Ye6jOUoAAYCPX.jpg' width="600" height="400"></img></h1>
 	&nbsp;&nbsp;&nbsp;
-	<a href='글쓰기창 이동' onclick='return login();'><button class='btn_top' style='vertical-align: middle'><span>글쓰기</span></button></a>
+	<button class='btn_top' style='vertical-align: middle' onclick='lotto(6, 1, 45);'><span>lotto</span></button>
+	<div id="numbers"></div>
 	&nbsp;&nbsp;&nbsp;
 
 	<hr width='800' size='2' noshade>
